@@ -3,98 +3,187 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>[Kulüp Adı] Satranç Kulübü</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <title>Resmi Satranç Kulübü</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
-        :root {
-            --primary-bg: #2c3e50;
-            --secondary-bg: #34495e;
-            --text-color: #ecf0f1;
-            --accent-color: #f39c12; /* Altın sarısı gibi vurgu rengi */
-            --card-bg: rgba(44, 62, 80, 0.7); /* Şeffaf kart arka planı */
-            --border-color: #556c80;
-        }
-
+        /* GENEL AYARLAR */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        
         body {
-            font-family: 'Montserrat', sans-serif;
-            margin: 0;
-            line-height: 1.7;
-            color: var(--text-color);
-            background-color: var(--primary-bg);
-            overflow-x: hidden; /* Yatay kaydırmayı engelle */
-            position: relative;
+            background: #000;
+            color: white;
+            overflow-x: hidden;
         }
 
-        /* Video Arka Plan */
-        .video-background {
+        /* HAREKETLİ ARKA PLAN (VİDEO) */
+        .video-bg {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
+            right: 0; bottom: 0;
+            min-width: 100%; min-height: 100%;
             z-index: -1;
-        }
-
-        .video-background video {
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            filter: brightness(0.4) blur(2px); /* Yazılar okunsun diye kararttık */
             object-fit: cover;
-            filter: brightness(0.5); /* Videoyu karartma */
         }
 
-        /* Genel Düzen */
-        .container {
-            max-width: 1200px;
-            margin: auto;
-            padding: 20px;
-            position: relative; /* İçeriği videonun üzerinde tutmak için */
-            z-index: 1;
-        }
-
-        header {
-            background: rgba(0, 0, 0, 0.6); /* Şeffaf başlık */
-            padding: 1rem 0;
-            text-align: center;
-            border-bottom: 2px solid var(--accent-color);
-        }
-
-        header h1 {
-            margin: 0;
-            font-family: 'Playfair Display', serif;
-            color: var(--accent-color);
-            font-size: 2.8rem;
-        }
-
+        /* NAVİGASYON MENÜSÜ */
         nav {
-            background: rgba(0, 0, 0, 0.7);
-            padding: 0.8rem 0;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
             text-align: center;
-            margin-bottom: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 2px solid #f39c12;
         }
 
         nav a {
-            color: var(--text-color);
-            margin: 0 25px;
+            color: white;
             text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1rem;
-            transition: color 0.3s ease, transform 0.3s ease;
-            position: relative;
-            padding-bottom: 5px;
+            margin: 0 15px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+            text-transform: uppercase;
         }
 
-        nav a:hover, nav a.active {
-            color: var(--accent-color);
-            transform: translateY(-2px);
+        nav a:hover { color: #f39c12; }
+
+        /* SAYFA YAPISI */
+        .page {
+            display: none; /* Sayfalar başta gizli */
+            padding: 50px 20px;
+            min-height: 90vh;
+            animation: fadeIn 0.8s ease;
         }
 
-        nav a::after {
-            content: '';
-            position: absolute
+        .active { display: block; } /* Sadece aktif olan görünür */
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* İÇERİK KUTULARI (CAM EFEKTİ) */
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        h1, h2 { color: #f39c12; margin-bottom: 20px; text-align: center; }
+
+        /* İLETİŞİM ALANI VE BUTONLAR */
+        .contact-box {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn-social {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            border-radius: 10px;
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .instagram-me { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+        .instagram-friend { background: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584); }
+        .whatsapp { background: #25d366; }
+
+        .btn-social:hover { transform: scale(1.03); filter: brightness(1.1); }
+        .btn-social i { margin-right: 10px; font-size: 20px; }
+
+        /* TABLO (SIRALAMA İÇİN) */
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); text-align: left; }
+        th { color: #f39c12; }
+
+        footer { text-align: center; padding: 20px; font-size: 14px; color: #aaa; }
+    </style>
+</head>
+<body>
+
+    <video autoplay muted loop playsinline class="video-bg">
+        <source src="https://assets.mixkit.co/videos/preview/mixkit-chess-board-game-in-close-up-view-28043-large.mp4" type="video/mp4">
+    </video>
+
+    <nav>
+        <a onclick="showPage('home')">Ana Sayfa</a>
+        <a onclick="showPage('tournaments')">Turnuvalar</a>
+        <a onclick="showPage('ranking')">Sıralama</a>
+        <a onclick="showPage('contact')">İletişim</a>
+    </nav>
+
+    <div class="container">
+        <section id="home" class="page active">
+            <h1>♟️ Satranç Kulübümüze Hoş Geldiniz</h1>
+            <p>Zekanın ve stratejinin buluştuğu noktadasınız. Kulübümüz resmi olarak kurulmuş olup, tüm satranç severleri tek çatı altında toplamayı hedefler.</p>
+            <br>
+            <p>Siz de aramıza katılın, hamlelerinizi dünyaya duyurun!</p>
+        </section>
+
+        <section id="tournaments" class="page">
+            <h2>🏆 Güncel Turnuvalar</h2>
+            <p>• <b>Bahar Kupası:</b> 20 Mart 2026</p>
+            <p>• <b>Hızlı Satranç Gecesi:</b> Her Cuma 20:00</p>
+            <p>• <b>Online Eleme:</b> 5 Nisan 2026</p>
+        </section>
+
+        <section id="ranking" class="page">
+            <h2>📊 Üye Sıralaması</h2>
+            <table>
+                <tr><th>#</th><th>Oyuncu</th><th>ELO</th></tr>
+                <tr><td>1</td><td>Ahmet Y.</td><td>2100</td></tr>
+                <tr><td>2</td><td>Zeynep K.</td><td>1950</td></tr>
+                <tr><td>3</td><td>Mehmet A.</td><td>1820</td></tr>
+            </table>
+        </section>
+
+        <section id="contact" class="page">
+            <h2>✉️ Bizimle İletişime Geçin</h2>
+            <div class="contact-box">
+                <a href="https://instagram.com/KENDI_KULLANICI_ADIN" class="btn-social instagram-me" target="_blank">
+                    <i class="fab fa-instagram"></i> Kurucu Instagram
+                </a>
+                
+                <a href="https://instagram.com/ARKADASININ_KULLANICI_ADIN" class="btn-social instagram-friend" target="_blank">
+                    <i class="fab fa-instagram"></i> Yönetici Instagram
+                </a>
+
+                <a href="https://wa.me/905000000000" class="btn-social whatsapp" target="_blank">
+                    <i class="fab fa-whatsapp"></i> WhatsApp Hattı
+                </a>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        &copy; 2026 Resmi Satranç Kulübü. Tüm Hakları Saklıdır.
+    </footer>
+
+    <script>
+        function showPage(pageId) {
+            // Önce tüm sayfaları gizle
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
+
+            // Seçilen sayfayı göster
+            document.getElementById(pageId).classList.add('active');
+        }
+    </script>
+
+</body>
+</html>
