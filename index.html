@@ -1,97 +1,189 @@
-<section id="ranking" class="page">
-    <h2>📊 Üye Sıralaması</h2>
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resmi Satranç Kulübü</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <div style="background: rgba(243, 156, 18, 0.2); padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 1px dashed #f39c12;">
-        <h4 style="margin-bottom: 10px; color: #f39c12;">Yeni Oyuncu Ekle</h4>
-        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-            <input type="text" id="playerName" placeholder="Oyuncu Adı" style="padding: 10px; border-radius: 5px; border: none; flex: 2;">
-            <input type="number" id="playerElo" placeholder="ELO" style="padding: 10px; border-radius: 5px; border: none; flex: 1;">
-            <button onclick="addPlayer()" style="padding: 10px 20px; background: #f39c12; border: none; border-radius: 5px; color: black; font-weight: bold; cursor: pointer;">Ekle</button>
-        </div>
+    <style>
+        /* GENEL AYARLAR */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        
+        body {
+            background: #000;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* HAREKETLİ ARKA PLAN (VİDEO) */
+        .video-bg {
+            position: fixed;
+            right: 0; bottom: 0;
+            min-width: 100%; min-height: 100%;
+            z-index: -1;
+            filter: brightness(0.4) blur(2px); /* Yazılar okunsun diye kararttık */
+            object-fit: cover;
+        }
+
+        /* NAVİGASYON MENÜSÜ */
+        nav {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 2px solid #f39c12;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        nav a:hover { color: #f39c12; }
+
+        /* SAYFA YAPISI */
+        .page {
+            display: none; /* Sayfalar başta gizli */
+            padding: 50px 20px;
+            min-height: 90vh;
+            animation: fadeIn 0.8s ease;
+        }
+
+        .active { display: block; } /* Sadece aktif olan görünür */
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* İÇERİK KUTULARI (CAM EFEKTİ) */
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        h1, h2 { color: #f39c12; margin-bottom: 20px; text-align: center; }
+
+        /* İLETİŞİM ALANI VE BUTONLAR */
+        .contact-box {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn-social {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            border-radius: 10px;
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .instagram-me { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+        .instagram-friend { background: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584); }
+        .whatsapp { background: #25d366; }
+
+        .btn-social:hover { transform: scale(1.03); filter: brightness(1.1); }
+        .btn-social i { margin-right: 10px; font-size: 20px; }
+
+        /* TABLO (SIRALAMA İÇİN) */
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); text-align: left; }
+        th { color: #f39c12; }
+
+        footer { text-align: center; padding: 20px; font-size: 14px; color: #aaa; }
+    </style>
+</head>
+<body>
+
+    <video autoplay muted loop playsinline class="video-bg">
+        <source src="https://assets.mixkit.co/videos/preview/mixkit-chess-board-game-in-close-up-view-28043-large.mp4" type="video/mp4">
+    </video>
+
+    <nav>
+        <a onclick="showPage('home')">Ana Sayfa</a>
+        <a onclick="showPage('tournaments')">Turnuvalar</a>
+        <a onclick="showPage('ranking')">Sıralama</a>
+        <a onclick="showPage('contact')">İletişim</a>
+    </nav>
+
+    <div class="container">
+        <section id="home" class="page active">
+            <h1>♟️ Satranç Kulübümüze Hoş Geldiniz</h1>
+            <p>Zekanın ve stratejinin buluştuğu noktadasınız. Kulübümüz resmi olarak kurulmuş olup, tüm satranç severleri tek çatı altında toplamayı hedefler.</p>
+            <br>
+            <p>Siz de aramıza katılın, hamlelerinizi dünyaya duyurun!</p>
+        </section>
+
+        <section id="tournaments" class="page">
+            <h2>🏆 Güncel Turnuvalar</h2>
+            <p>• <b>Bahar Kupası:</b> 20 Mart 2026</p>
+            <p>• <b>Hızlı Satranç Gecesi:</b> Her Cuma 20:00</p>
+            <p>• <b>Online Eleme:</b> 5 Nisan 2026</p>
+        </section>
+
+        <section id="ranking" class="page">
+            <h2>📊 Üye Sıralaması</h2>
+            <table>
+                <tr><th>#</th><th>Oyuncu</th><th>ELO</th></tr>
+                <tr><td>1</td><td>Ahmet Y.</td><td>2100</td></tr>
+                <tr><td>2</td><td>Zeynep K.</td><td>1950</td></tr>
+                <tr><td>3</td><td>Mehmet A.</td><td>1820</td></tr>
+            </table>
+        </section>
+
+        <section id="contact" class="page">
+            <h2>✉️ Bizimle İletişime Geçin</h2>
+            <div class="contact-box">
+                <a href="https://instagram.com/KENDI_KULLANICI_ADIN" class="btn-social instagram-me" target="_blank">
+                    <i class="fab fa-instagram"></i> Kurucu Instagram
+                </a>
+                
+                <a href="https://instagram.com/ARKADASININ_KULLANICI_ADIN" class="btn-social instagram-friend" target="_blank">
+                    <i class="fab fa-instagram"></i> Yönetici Instagram
+                </a>
+
+                <a href="https://wa.me/905000000000" class="btn-social whatsapp" target="_blank">
+                    <i class="fab fa-whatsapp"></i> WhatsApp Hattı
+                </a>
+            </div>
+        </section>
     </div>
 
-    <table>
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Oyuncu</th>
-                <th>ELO</th>
-                <th>İşlem</th>
-            </tr>
-        </thead>
-        <tbody id="rankingTableBody">
-            </tbody>
-    </table>
-</section>
+    <footer>
+        &copy; 2026 Resmi Satranç Kulübü. Tüm Hakları Saklıdır.
+    </footer>
 
-<script>
-    // Sayfa yüklendiğinde verileri getir
-    document.addEventListener('DOMContentLoaded', () => {
-        renderTable();
-    });
+    <script>
+        function showPage(pageId) {
+            // Önce tüm sayfaları gizle
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
 
-    // Varsayılan Oyuncular (Eğer liste boşsa)
-    let players = JSON.parse(localStorage.getItem('chessPlayers')) || [
-        { name: "Ahmet Y.", elo: 2100 },
-        { name: "Zeynep K.", elo: 1950 },
-        { name: "Mehmet A.", elo: 1820 }
-    ];
-
-    function renderTable() {
-        const tableBody = document.getElementById('rankingTableBody');
-        tableBody.innerHTML = '';
-
-        // ELO'ya göre büyükten küçüğe sırala
-        players.sort((a, b) => b.elo - a.elo);
-
-        players.forEach((player, index) => {
-            tableBody.innerHTML += `
-                <tr>
-                    <td>${index + 1}</td>
-                    <td>${player.name}</td>
-                    <td>${player.elo}</td>
-                    <td><button onclick="deletePlayer(${index})" style="background:none; border:none; color:#ff4d4d; cursor:pointer;"><i class="fas fa-trash"></i></button></td>
-                </tr>
-            `;
-        });
-        
-        // Veriyi kaydet
-        localStorage.setItem('chessPlayers', JSON.stringify(players));
-    }
-
-    function addPlayer() {
-        const nameInput = document.getElementById('playerName');
-        const eloInput = document.getElementById('playerElo');
-
-        if (nameInput.value === '' || eloInput.value === '') {
-            alert("Lütfen tüm alanları doldurun!");
-            return;
+            // Seçilen sayfayı göster
+            document.getElementById(pageId).classList.add('active');
         }
+    </script>
 
-        const newPlayer = {
-            name: nameInput.value,
-            elo: parseInt(eloInput.value)
-        };
-
-        players.push(newPlayer);
-        renderTable();
-
-        // Formu temizle
-        nameInput.value = '';
-        eloInput.value = '';
-    }
-
-    function deletePlayer(index) {
-        if(confirm("Bu oyuncuyu silmek istediğine emin misin?")) {
-            players.splice(index, 1);
-            renderTable();
-        }
-    }
-
-    // Mevcut showPage fonksiyonun (Aynen kalsın)
-    function showPage(pageId) {
-        const pages = document.querySelectorAll('.page');
-        pages.forEach(page => page.classList.remove('active'));
-        document.getElementById(pageId).classList.add('active');
-    }
-</script>
+</body>
+</html>
