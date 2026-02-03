@@ -3,61 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resmi Satranç Kulübü</title>
+    <title>[Kulüp Adı] Satranç Kulübü</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; line-height: 1.6; color: #333; }
-        header { background: #2c3e50; color: white; padding: 1rem; text-align: center; }
-        nav { background: #34495e; padding: 0.5rem; text-align: center; }
-        nav a { color: white; margin: 0 15px; text-decoration: none; font-weight: bold; }
-        .hero { background: #ecf0f1; padding: 4rem 2rem; text-align: center; }
-        .container { padding: 2rem; max-width: 1000px; margin: auto; }
-        .card { border: 1px solid #ddd; padding: 1rem; margin-bottom: 1rem; border-radius: 8px; }
-        footer { background: #2c3e50; color: white; text-align: center; padding: 1rem; position: fixed; width: 100%; bottom: 0; }
-    </style>
-</head>
-<body>
+        :root {
+            --primary-bg: #2c3e50;
+            --secondary-bg: #34495e;
+            --text-color: #ecf0f1;
+            --accent-color: #f39c12; /* Altın sarısı gibi vurgu rengi */
+            --card-bg: rgba(44, 62, 80, 0.7); /* Şeffaf kart arka planı */
+            --border-color: #556c80;
+        }
 
-<header>
-    <h1>[Kulüp Adı] Satranç Kulübü</h1>
-</header>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            line-height: 1.7;
+            color: var(--text-color);
+            background-color: var(--primary-bg);
+            overflow-x: hidden; /* Yatay kaydırmayı engelle */
+            position: relative;
+        }
 
-<nav>
-    <a href="#anasayfa">Ana Sayfa</a>
-    <a href="#turnuvalar">Turnuvalar</a>
-    <a href="#uyeler">Üye Sıralaması</a>
-    <a href="#iletisim">İletişim</a>
-</nav>
+        /* Video Arka Plan */
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
 
-<section id="anasayfa" class="hero">
-    <h2>Zekanı Hamlelerle Konuştur!</h2>
-    <p>Resmi satranç kulübümüze hoş geldiniz. Burada strateji, dostluk ve rekabet bir arada.</p>
-</section>
+        .video-background video {
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+            filter: brightness(0.5); /* Videoyu karartma */
+        }
 
-<div class="container">
-    <section id="turnuvalar">
-        <h2>🏆 Yaklaşan Turnuvalar</h2>
-        <div class="card">
-            <h3>Bahar Kupası 2026</h3>
-            <p>Tarih: 15 Mart 2026 | Yer: Kulüp Merkezi</p>
-        </div>
-    </section>
+        /* Genel Düzen */
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
+            position: relative; /* İçeriği videonun üzerinde tutmak için */
+            z-index: 1;
+        }
 
-    <section id="uyeler">
-        <h2>📊 Üye Sıralaması (Top 3)</h2>
-        <table border="1" width="100%" style="border-collapse: collapse; text-align: left;">
-            <tr style="background: #f4f4f4;">
-                <th>Sıra</th>
-                <th>İsim</th>
-                <th>ELO</th>
-            </tr>
-            <tr><td>1</td><td>Ahmet Yılmaz</td><td>1950</td></tr>
-            <tr><td>2</td><td>Elif Demir</td><td>1820</td></tr>
-            <tr><td>3</td><td>Can Kaya</td><td>1750</td></tr>
-        </table>
-    </section>
-</div>
+        header {
+            background: rgba(0, 0, 0, 0.6); /* Şeffaf başlık */
+            padding: 1rem 0;
+            text-align: center;
+            border-bottom: 2px solid var(--accent-color);
+        }
 
+        header h1 {
+            margin: 0;
+            font-family: 'Playfair Display', serif;
+            color: var(--accent-color);
+            font-size: 2.8rem;
+        }
 
+        nav {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 0.8rem 0;
+            text-align: center;
+            margin-bottom: 20px;
+        }
 
-</body>
-</html>
+        nav a {
+            color: var(--text-color);
+            margin: 0 25px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: color 0.3s ease, transform 0.3s ease;
+            position: relative;
+            padding-bottom: 5px;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--accent-color);
+            transform: translateY(-2px);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute
