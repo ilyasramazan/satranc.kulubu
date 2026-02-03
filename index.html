@@ -3,115 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resmi Satranç Kulübü</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+    <title>Resmi Satranç Kulübü | Yönetim Paneli</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* GENEL AYARLAR */
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-        
-        body {
-            background: #000;
-            color: white;
-            overflow-x: hidden;
+        :root {
+            --accent: #f39c12;
+            --bg-dark: rgba(0, 0, 0, 0.85);
+            --glass: rgba(255, 255, 255, 0.1);
         }
 
-        /* HAREKETLİ ARKA PLAN (VİDEO) */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        
+        body { background: #000; color: white; overflow-x: hidden; }
+
+        /* HAREKETLİ ARKA PLAN */
         .video-bg {
-            position: fixed;
-            right: 0; bottom: 0;
+            position: fixed; right: 0; bottom: 0;
             min-width: 100%; min-height: 100%;
-            z-index: -1;
-            filter: brightness(0.4) blur(2px); /* Yazılar okunsun diye kararttık */
+            z-index: -1; filter: brightness(0.3) blur(1px);
             object-fit: cover;
         }
 
-        /* NAVİGASYON MENÜSÜ */
+        /* NAVİGASYON */
         nav {
-            background: rgba(0, 0, 0, 0.8);
-            padding: 20px;
-            text-align: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            border-bottom: 2px solid #f39c12;
+            background: var(--bg-dark);
+            padding: 15px; text-align: center;
+            position: sticky; top: 0; z-index: 100;
+            border-bottom: 2px solid var(--accent);
+            backdrop-filter: blur(10px);
         }
 
         nav a {
-            color: white;
-            text-decoration: none;
-            margin: 0 15px;
-            font-weight: bold;
-            transition: 0.3s;
-            cursor: pointer;
-            text-transform: uppercase;
+            color: white; text-decoration: none;
+            margin: 0 15px; font-weight: 600;
+            transition: 0.3s; cursor: pointer;
+            text-transform: uppercase; font-size: 0.9rem;
         }
 
-        nav a:hover { color: #f39c12; }
+        nav a:hover, nav a.active-link { color: var(--accent); }
 
         /* SAYFA YAPISI */
-        .page {
-            display: none; /* Sayfalar başta gizli */
-            padding: 50px 20px;
-            min-height: 90vh;
-            animation: fadeIn 0.8s ease;
-        }
-
-        .active { display: block; } /* Sadece aktif olan görünür */
+        .container { max-width: 1000px; margin: 30px auto; padding: 20px; }
+        .page { display: none; animation: fadeIn 0.6s ease; }
+        .active { display: block; }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* İÇERİK KUTULARI (CAM EFEKTİ) */
-        .container {
-            max-width: 900px;
-            margin: auto;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            padding: 40px;
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+        /* CAM EFEKTİ KARTLAR */
+        .glass-card {
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            padding: 30px; border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            margin-bottom: 30px;
         }
 
-        h1, h2 { color: #f39c12; margin-bottom: 20px; text-align: center; }
+        h1, h2 { color: var(--accent); margin-bottom: 20px; text-align: center; text-transform: uppercase; }
 
-        /* İLETİŞİM ALANI VE BUTONLAR */
-        .contact-box {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-top: 30px;
+        /* FORM STİLLERİ */
+        .admin-panel {
+            background: rgba(243, 156, 18, 0.1);
+            padding: 20px; border-radius: 15px;
+            border: 1px dashed var(--accent);
+            margin-bottom: 25px;
         }
 
-        .btn-social {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 15px;
-            border-radius: 10px;
-            text-decoration: none;
-            color: white;
-            font-weight: bold;
+        .input-group { display: flex; gap: 10px; flex-wrap: wrap; }
+        input {
+            padding: 12px; border-radius: 8px; border: none;
+            background: rgba(255,255,255,0.2); color: white; outline: none; flex: 1;
+        }
+
+        button.btn-add {
+            background: var(--accent); color: black; font-weight: bold;
+            padding: 12px 25px; border: none; border-radius: 8px; cursor: pointer;
             transition: 0.3s;
         }
+        button.btn-add:hover { transform: scale(1.05); background: #e67e22; }
 
-        .instagram-me { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
-        .instagram-friend { background: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584); }
+        /* TABLO VE ÜYE KARTLARI */
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 15px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        th { color: var(--accent); }
+
+        .members-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px; margin-top: 20px;
+        }
+
+        .member-card {
+            background: rgba(255,255,255,0.05); padding: 20px; border-radius: 15px;
+            text-align: center; transition: 0.3s; border-top: 4px solid var(--accent);
+        }
+
+        /* SOSYAL MEDYA */
+        .contact-box { display: flex; flex-direction: column; gap: 15px; }
+        .btn-social {
+            display: flex; align-items: center; justify-content: center;
+            padding: 15px; border-radius: 12px; text-decoration: none;
+            color: white; font-weight: bold; transition: 0.3s;
+        }
+        .inst-me { background: linear-gradient(45deg, #f09433, #dc2743, #bc1888); }
+        .inst-friend { background: linear-gradient(45deg, #405de6, #833ab4, #5851db); }
         .whatsapp { background: #25d366; }
-
-        .btn-social:hover { transform: scale(1.03); filter: brightness(1.1); }
+        .btn-social:hover { transform: scale(1.02); }
         .btn-social i { margin-right: 10px; font-size: 20px; }
 
-        /* TABLO (SIRALAMA İÇİN) */
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); text-align: left; }
-        th { color: #f39c12; }
-
-        footer { text-align: center; padding: 20px; font-size: 14px; color: #aaa; }
+        footer { text-align: center; padding: 30px; font-size: 13px; color: #888; }
     </style>
 </head>
 <body>
@@ -121,70 +125,129 @@
     </video>
 
     <nav>
-        <a onclick="showPage('home')">Ana Sayfa</a>
-        <a onclick="showPage('tournaments')">Turnuvalar</a>
-        <a onclick="showPage('ranking')">Sıralama</a>
-        <a onclick="showPage('contact')">İletişim</a>
+        <a onclick="showPage('home')" id="link-home">Ana Sayfa</a>
+        <a onclick="showPage('members')" id="link-members">Üyeler</a>
+        <a onclick="showPage('ranking')" id="link-ranking">Sıralama</a>
+        <a onclick="showPage('tournaments')" id="link-tournaments">Turnuvalar</a>
+        <a onclick="showPage('contact')" id="link-contact">İletişim</a>
     </nav>
 
     <div class="container">
+        
         <section id="home" class="page active">
-            <h1>♟️ Satranç Kulübümüze Hoş Geldiniz</h1>
-            <p>Zekanın ve stratejinin buluştuğu noktadasınız. Kulübümüz resmi olarak kurulmuş olup, tüm satranç severleri tek çatı altında toplamayı hedefler.</p>
-            <br>
-            <p>Siz de aramıza katılın, hamlelerinizi dünyaya duyurun!</p>
+            <div class="glass-card">
+                <h1>♟️ Satranç Kulübü</h1>
+                <p style="text-align: center; font-size: 1.1rem;">Resmi kulübümüze hoş geldiniz! Stratejini geliştir, hamleni yap ve topluluğumuzun bir parçası ol.</p>
+            </div>
         </section>
 
-        <section id="tournaments" class="page">
-            <h2>🏆 Güncel Turnuvalar</h2>
-            <p>• <b>Bahar Kupası:</b> 20 Mart 2026</p>
-            <p>• <b>Hızlı Satranç Gecesi:</b> Her Cuma 20:00</p>
-            <p>• <b>Online Eleme:</b> 5 Nisan 2026</p>
+        <section id="members" class="page">
+            <div class="glass-card">
+                <h2>👥 Kulüp Üyelerimiz</h2>
+                <div id="membersGrid" class="members-grid"></div>
+            </div>
         </section>
 
         <section id="ranking" class="page">
-            <h2>📊 Üye Sıralaması</h2>
-            <table>
-                <tr><th>#</th><th>Oyuncu</th><th>ELO</th></tr>
-                <tr><td>1</td><td>Ahmet Y.</td><td>2100</td></tr>
-                <tr><td>2</td><td>Zeynep K.</td><td>1950</td></tr>
-                <tr><td>3</td><td>Mehmet A.</td><td>1820</td></tr>
-            </table>
+            <div class="glass-card">
+                <h2>📊 ELO Sıralaması</h2>
+                <div class="admin-panel">
+                    <h4 style="margin-bottom: 10px;">Yeni Oyuncu Ekle</h4>
+                    <div class="input-group">
+                        <input type="text" id="pName" placeholder="İsim Soyisim">
+                        <input type="number" id="pElo" placeholder="ELO Puanı">
+                        <button class="btn-add" onclick="addPlayer()">EKLE</button>
+                    </div>
+                </div>
+                <table>
+                    <thead>
+                        <tr><th>#</th><th>Oyuncu</th><th>ELO</th><th>İşlem</th></tr>
+                    </thead>
+                    <tbody id="rankingTableBody"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="tournaments" class="page">
+            <div class="glass-card">
+                <h2>🏆 Etkinlikler</h2>
+                <p>• <b>Haftalık Blitz:</b> Her Pazar 15:00</p>
+                <p>• <b>Ayın Oyuncusu Turnuvası:</b> 28 Şubat</p>
+            </div>
         </section>
 
         <section id="contact" class="page">
-            <h2>✉️ Bizimle İletişime Geçin</h2>
-            <div class="contact-box">
-                <a href="https://instagram.com/ramazan_ay.47" class="btn-social instagram-me" target="_blank">
-                    <i class="fab fa-instagram"></i> Kurucu Instagram
-                </a>
-                
-                <a href="https://instagram.com/sef.er68" class="btn-social instagram-friend" target="_blank">
-                    <i class="fab fa-instagram"></i> Yönetici Instagram
-                </a>
-
-                <a href="https://wa.me/
-                    5516720898" class="btn-social whatsapp" target="_blank">
-                    <i class="fab fa-whatsapp"></i> WhatsApp Hattı
-                </a>
+            <div class="glass-card">
+                <h2>✉️ İletişim & Destek</h2>
+                <div class="contact-box">
+                    <a href="https://instagram.com/KENDI_KULLANICI_ADIN" class="btn-social inst-me" target="_blank">
+                        <i class="fab fa-instagram"></i> Kurucu Instagram
+                    </a>
+                    <a href="https://instagram.com/ARKADASININ_KULLANICI_ADIN" class="btn-social inst-friend" target="_blank">
+                        <i class="fab fa-instagram"></i> Yönetici Instagram
+                    </a>
+                    <a href="https://wa.me/905XXXXXXXXX" class="btn-social whatsapp" target="_blank">
+                        <i class="fab fa-whatsapp"></i> WhatsApp Destek Hattı 1
+                    </a>
+                    <a href="https://wa.me/905YYYYYYYYY" class="btn-social whatsapp" target="_blank">
+                        <i class="fab fa-whatsapp"></i> WhatsApp Destek Hattı 2
+                    </a>
+                </div>
             </div>
         </section>
+
     </div>
 
-    <footer>
-        &copy; 2026 Resmi Satranç Kulübü. Tüm Hakları Saklıdır.
-    </footer>
+    <footer>&copy; 2026 Resmi Satranç Kulübü. Tüm Hakları Saklıdır.</footer>
 
     <script>
+        let players = JSON.parse(localStorage.getItem('chessClubData')) || [
+            { name: "Ahmet Yılmaz", elo: 2100 },
+            { name: "Zeynep Kaya", elo: 1850 }
+        ];
+
         function showPage(pageId) {
-            // Önce tüm sayfaları gizle
-            const pages = document.querySelectorAll('.page');
-            pages.forEach(page => page.classList.remove('active'));
-
-            // Seçilen sayfayı göster
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('nav a').forEach(a => a.classList.remove('active-link'));
             document.getElementById(pageId).classList.add('active');
+            document.getElementById('link-' + pageId).classList.add('active-link');
         }
-    </script>
 
+        function getEloStatus(elo) {
+            if (elo >= 2000) return { label: "Usta", color: "#ff4d4d" };
+            if (elo >= 1500) return { label: "İleri", color: "#f39c12" };
+            return { label: "Çırak", color: "#2ecc71" };
+        }
+
+        function renderAll() {
+            const tableBody = document.getElementById('rankingTableBody');
+            const grid = document.getElementById('membersGrid');
+            tableBody.innerHTML = ''; grid.innerHTML = '';
+            players.sort((a, b) => b.elo - a.elo);
+
+            players.forEach((p, index) => {
+                const status = getEloStatus(p.elo);
+                tableBody.innerHTML += `<tr><td>${index+1}</td><td><b>${p.name}</b></td><td style="color:${status.color}">${p.elo}</td><td><button onclick="deletePlayer(${index})" style="background:none; border:none; color:red; cursor:pointer;"><i class="fas fa-trash"></i></button></td></tr>`;
+                grid.innerHTML += `<div class="member-card" style="border-top-color: ${status.color}"><i class="fas fa-chess-knight" style="font-size: 30px; color:${status.color}"></i><h3>${p.name}</h3><p style="color:#aaa;">${status.label}</p><div style="font-weight:bold; color:${status.color}">${p.elo} ELO</div></div>`;
+            });
+            localStorage.setItem('chessClubData', JSON.stringify(players));
+        }
+
+        function addPlayer() {
+            const name = document.getElementById('pName').value;
+            const elo = document.getElementById('pElo').value;
+            if (name && elo) {
+                players.push({ name: name, elo: parseInt(elo) });
+                document.getElementById('pName').value = ''; document.getElementById('pElo').value = '';
+                renderAll();
+            }
+        }
+
+        function deletePlayer(index) {
+            if(confirm("Silmek istediğinize emin misiniz?")) { players.splice(index, 1); renderAll(); }
+        }
+
+        document.addEventListener('DOMContentLoaded', renderAll);
+    </script>
 </body>
 </html>
